@@ -1,0 +1,10 @@
+html
+css
+js
+images
+fonts
+source
+node_modules
+.idea
+.npmignore
+gulpfile.js
