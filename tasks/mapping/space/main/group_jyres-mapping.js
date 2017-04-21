@@ -15,29 +15,32 @@ class JyRes extends SpaceMapping{
             let fancybox = this.Config.getJsTargetFilePath("jquery/jquery.fancybox")
             let uiWidget = this.Config.getJsTargetFilePath("ds-widget/jquery-ui-widget")
             let uiSearch = this.Config.getJsTargetFilePath("ds-widget/dui-search")
+            let input = this.Config.getJsTargetFilePath("ds-widget/dui-input")
             let pageConfig = this.Config.getJsTargetFilePath("space/tools/spacePage")
-            return Array.of(zTree, fancybox, uiWidget, uiSearch, pageConfig)
+            let yptResource = this.Config.getJsTargetFilePath("yptResource")
+            return Array.of(zTree, fancybox, uiWidget, uiSearch,input, pageConfig,yptResource)
         }else{
             let zTree = this.Config.getJsSourceFiles("jquery/jquery-ztree-all-3.5")
             let fancybox = this.Config.getJsSourceFiles("jquery/jquery.fancybox")
             let uiWidget = this.Config.getJsSourceFiles("ds-widget/jquery-ui-widget")
             let uiSearch = this.Config.getJsSourceFiles("ds-widget/dui-search")
+            let input = this.Config.getJsSourceFiles("ds-widget/dui-input")
             let pageConfig = this.Config.getJsSourceFiles("space/tools/spacePage")
-            return Array.of(zTree, fancybox, uiWidget, uiSearch, pageConfig)
+            let yptResource = this.Config.getJsSourceFiles("yptResource")
+            return Array.of(zTree, fancybox, uiWidget, uiSearch, input,pageConfig,yptResource)
         }
     }
 
     extraThirdCss(min = false){
         if(min){
             let ztreeStyle = this.Config.getCssTargetFilePath("jquery/zTreeStyle")
-            let uiCommon = this.Config.getCssTargetFilePath("dsWidget/common")
-            let mainGroup = this.Config.getCssTargetFilePath("space/main_group")
-            return Array.of(ztreeStyle, uiCommon, mainGroup)
+            
+            let fancybox = this.Config.getCssTargetFilePath("fancybox")
+            return Array.of(ztreeStyle, fancybox)
         }else{
             let ztreeStyle = this.Config.getCssSourceFiles("jquery/zTreeStyle")
-            let uiCommon = this.Config.getCssSourceFiles("dsWidget/common")
-            let mainGroup = this.Config.getCssSourceFiles("space/main_group")
-            return Array.of(ztreeStyle, uiCommon, mainGroup)
+            let fancybox = this.Config.getCssSourceFiles("fancybox")
+            return Array.of(ztreeStyle, fancybox)
         }
     }
 }

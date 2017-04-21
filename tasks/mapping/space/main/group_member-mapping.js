@@ -11,6 +11,18 @@ class Member extends SpaceMapping {
     }
 
 
+    extraThirdJs(min = false) {
+        let input,textArea
+        if(min){
+            textArea = this.Config.getJsTargetFilePath("ds-widget/dui-textarea")
+            input = this.Config.getJsTargetFilePath("ds-widget/dui-input")
+        }else{
+            textArea = this.Config.getJsSourceFiles("ds-widget/dui-textarea")
+            input = this.Config.getJsSourceFiles("ds-widget/dui-input")
+        }
+        return Array.of(textArea,input)
+    }
+
     commonOwnJs(min = false){
         if(min){
             let spaceConfig = this.Config.getJsTargetFilePath("space/tools/spacePage")

@@ -7,7 +7,7 @@ const rename = require("gulp-rename")
 const uglify = require("gulp-uglify")
 const Task = require("./libs/task")
 const path = require("path")
-const exec = require("child_process").exec
+
 
 /*
 * 压缩单独的js文件
@@ -32,14 +32,8 @@ gulp.task("uglify-js", function (finish) {
         .pipe(gulp.dest(targetPath))
 })
 
-/**
- * 执行Config.JSconfig中的所有js文件的压缩
- */
-gulp.task("uglify-jsconfig", function(){
-    let task = new Task()
-    let jsConfig = task.Config.JsConfig
-    for(let jsFileName in jsConfig){
-        console.info(jsConfig[jsFileName])
-        exec("gulp uglify-js --dir " + jsFileName)
-    }
-})
+
+/*
+* 压缩Config中的js文件
+*
+* */

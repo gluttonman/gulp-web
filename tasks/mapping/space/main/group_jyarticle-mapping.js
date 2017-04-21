@@ -39,15 +39,13 @@ class JYArticle extends Mapping{
     }
     extraThirdCss(min = false){
         if(min){
-            let thickBox = this.Config.getTargetFilePath(this.CssConfig, "thickbox")
             let fancyBox = this.Config.getTargetFilePath(this.CssConfig, "fancybox")
             let dsWidgetCommon = this.Config.getTargetFilePath(this.CssConfig, "dsWidget/common")
-            return Array.of(thickBox, fancyBox, dsWidgetCommon)
+            return Array.of(fancyBox, dsWidgetCommon)
         }else{
-            let thickBox = this.CssConfig["thickbox"]["source"]
             let fancyBox = this.CssConfig["fancybox"]["source"]
             let dsWidgetCommon = this.CssConfig["dsWidget"]["common"]["source"]
-            return Array.of(thickBox, fancyBox, dsWidgetCommon)
+            return Array.of(fancyBox, dsWidgetCommon)
         }
     }
 

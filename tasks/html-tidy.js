@@ -39,6 +39,7 @@ gulp.task("tpl", function (finish) {
     let dir  = path.normalize(argv.dir)
     let sourceHtml = task.htmlSourcesFiles(dir, false)
     let targetPath = task.htmlTargetPath(dir)
+    console.info(targetPath)
     gulp.src(sourceHtml)
         .pipe(contentIncluder({
             includerReg: INCLUDE_REG
@@ -106,15 +107,15 @@ function injectFiles(htmlPath, isMin) {
 
 }
 function injectJsFiles(htmlPath, isMin) {
-    let htmlName = htmlPath.substring(htmlPath.lastIndexOf("/") + 1, htmlPath.lastIndexOf("."))
+    let htmlName = htmlPath.indexOf(path.sep)!=-1? htmlPath.substring(htmlPath.lastIndexOf("/") + 1, htmlPath.lastIndexOf(".")):htmlPath.substring(0, htmlPath.lastIndexOf("."))
     let mapping = new Mapping()
     let jsFiles = []
     /*加载共有的第三方js插件*/
-    jsFiles = jsFiles.concat(mapping.commonThirdJs(path.normalize(htmlPath), isMin))
+    jsFiles = jsFiles.concat(mapping.commonThirdJs(path.normalize(htmlName), isMin))
     /*加载页面中独有的第三方js文件*/
-    jsFiles = jsFiles.concat(mapping.extraThirdJs(path.normalize(htmlPath), isMin))
+    jsFiles = jsFiles.concat(mapping.extraThirdJs(path.normalize(htmlName), isMin))
     /*加载页面共有的自己开发插件*/
-    jsFiles = jsFiles.concat(mapping.commonOwnJs(path.normalize(htmlPath), isMin))
+    jsFiles = jsFiles.concat(mapping.commonOwnJs(path.normalize(htmlName), isMin))
     /*加载页面独有的js文件*/
     jsFiles = jsFiles.concat(mapping.uniqueJs(path.normalize(htmlPath.replace(".html",".js")), isMin))
     console.info(jsFiles)
@@ -122,15 +123,15 @@ function injectJsFiles(htmlPath, isMin) {
 }
 
 function injectCssFiles(htmlPath, isMin) {
-    let htmlName = htmlPath.substring(htmlPath.lastIndexOf("/") + 1, htmlPath.indexOf("."))
+    let htmlName = htmlPath.indexOf(path.sep)!=-1?htmlPath.substring(htmlPath.lastIndexOf("/") + 1, htmlPath.indexOf(".")):htmlPath.substring(0, htmlPath.lastIndexOf("."))
     let mapping = new Mapping()
     let CssFile = []
     /*加载共有的第三方css插件*/
-    CssFile = CssFile.concat(mapping.commonThirdCss(path.normalize(htmlPath), isMin))
+    CssFile = CssFile.concat(mapping.commonThirdCss(path.normalize(htmlName), isMin))
     /*加载页面中独有的第三方css文件*/
-    CssFile = CssFile.concat(mapping.extraThirdCss(path.normalize(htmlPath), isMin))
+    CssFile = CssFile.concat(mapping.extraThirdCss(path.normalize(htmlName), isMin))
     /*加载页面中共有的自己开发的css文件*/
-    CssFile = CssFile.concat(mapping.commonOwnCss(path.normalize(htmlPath), isMin))
+    CssFile = CssFile.concat(mapping.commonOwnCss(path.normalize(htmlName), isMin))
     /*加载页面中独有的css文件*/
     CssFile = CssFile.concat(mapping.uniqueCss(path.normalize(htmlPath.replace(".html",".css")),isMin))
     console.info(CssFile)

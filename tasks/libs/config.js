@@ -194,7 +194,15 @@ Config.JsConfig = {
         	source : path.normalize(Config.JS_SOURCE_PATH + "/jquery/jquery.ztree.excheck-3.5.js")
         }
     },
-
+    yptArticle : {
+    	source : path.normalize(Config.JS_SOURCE_PATH + "/article/yptArticle.js")
+    },
+    yptResource : {
+    	source : path.normalize(Config.JS_SOURCE_PATH + "/resource/yptResource.js")
+    },
+    shareRange : {
+    	source : path.normalize(Config.JS_SOURCE_PATH + "/resource/dui-share-range.js")
+    },
     bootstrap:{
         source : path.normalize(Config.JS_SOURCE_PATH + "/bootstrap/bootstrap-3.0.3.js")
     },
@@ -204,12 +212,14 @@ Config.JsConfig = {
             template: path.normalize(Config.JS_SOURCE_PATH +"/base/template.js"),
             base64 : path.normalize(Config.JS_SOURCE_PATH + "/base/base64.js"),
             artDialog : path.normalize(Config.JS_SOURCE_PATH + "/base/artDialog.js"),
-            baseConfig : path.normalize(Config.JS_SOURCE_PATH + "/base/base-config.js"),
             thickbox : path.normalize(Config.JS_SOURCE_PATH + "/base/thickbox.js"),
             iframeTools : path.normalize(Config.JS_SOURCE_PATH + "/base/iframeTools.js"),
-            yptResource : path.normalize(Config.JS_SOURCE_PATH + "/base/yptResource.js"),
+            baseConfig : path.normalize(Config.JS_SOURCE_PATH + "/base/base-config.js"),
             newConfig : path.normalize(Config.JS_SOURCE_PATH + "/base/newConfig.js")
         }
+    },
+    manage :{
+    	source : path.normalize(Config.JS_SOURCE_PATH + "/manage/manageConfig.js")
     },
     "ds-widget" : {
         "jquery-ui-widget" :{
@@ -229,6 +239,9 @@ Config.JsConfig = {
         },
         "dui-dropdown-struc":{
             source : path.normalize(Config.JS_SOURCE_PATH + "/ds-widget/dui-dropdown-struc.js")
+        },
+        "dui-autocomplete":{
+        	source : path.normalize(Config.JS_SOURCE_PATH + "/ds-widget/dui-autocomplete.js")
         }
     },
     "ueditor" : {
@@ -253,6 +266,11 @@ Config.JsConfig = {
     "datePicker" : {
         "wdatePicker": {
             source: path.normalize(Config.JS_SOURCE_PATH + "/datepicker/WdatePicker.js")
+        }
+    },
+    "IEWdatePicker" : {
+        "wdatePicker": {
+            source: path.normalize(Config.JS_SOURCE_PATH + "/datepicker/IEWdatePicker.js")
         }
     },
     "page":{
@@ -282,6 +300,9 @@ Config.JsConfig = {
             moment : {
                 source : path.normalize(Config.JS_SOURCE_PATH + "/space/tools/moment.js")
             }
+        },
+        spaceConfig : {
+            source : path.normalize(Config.JS_SOURCE_PATH + "/space/space-config.js")
         }
     }
 }
@@ -346,11 +367,5 @@ Config.CssConfig = {
     }
 }
 
-Config.addJsConfig = function(values){
-    //TODO
-}
 
-Config.addCssConfig = function(){
-    //TODO
-}
 module.exports = Config

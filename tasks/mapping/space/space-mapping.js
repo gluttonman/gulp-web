@@ -14,13 +14,19 @@ class SpaceMapping extends Mapping{
     }
 
     extraThirdJs(min = false){
-        let zTree
+        let zTree,widget,search,fancybox
         if(min){
-            zTree = this.Config.getJsTargetFilePath("jquery/jquery.ztree.core-3.5")
+        	zTree = this.Config.getJsTargetFilePath("jquery/jquery.ztree.core-3.5")
+        	widget = this.Config.getJsTargetFilePath("ds-widget/jquery-ui-widget")
+            search = this.Config.getJsTargetFilePath("ds-widget/dui-search")
+            ancybox = this.Config.getJsTargetFilePath("jquery/jquery.fancybox")
         }else{
-            zTree = this.Config.getJsSourceFiles("jquery/jquery.ztree.core-3.5")
+        	zTree = this.Config.getJsSourceFiles("jquery/jquery.ztree.core-3.5")
+        	widget = this.Config.getJsSourceFiles("ds-widget/jquery-ui-widget")
+            search = this.Config.getJsSourceFiles("ds-widget/dui-search")
+            fancybox = this.Config.getJsSourceFiles("jquery/jquery.fancybox")
         }
-        return Array.of(zTree)
+        return Array.of(zTree,widget,search,fancybox)
     }
 
     commonOwnJs(min = false){
@@ -45,12 +51,18 @@ class SpaceMapping extends Mapping{
             let skins = this.Config.getCssTargetFilePath("skins")
             let loadSpaceCommon = this.Config.getCssTargetFilePath("space/loadSpaceCommon")
             let zTree = this.Config.getCssTargetFilePath("jquery/zTreeStyle")
-            return Array.of(skins, loadSpaceCommon, zTree)
+            let thickbox = this.Config.getCssTargetFilePath("thickbox")
+            let mainGroup = this.Config.getCssTargetFilePath("space/main_group")
+            let uiCommon = this.Config.getCssTargetFilePath("dsWidget/common")
+            return Array.of(skins, loadSpaceCommon, zTree,thickbox,mainGroup,uiCommon)
         }else {
             let skins = this.Config.getCssSourceFiles("skins")
             let loadSpaceCommon = this.Config.getCssSourceFiles("space/loadSpaceCommon")
             let zTree = this.Config.getCssSourceFiles("jquery/zTreeStyle")
-            return Array.of(skins, loadSpaceCommon, zTree)
+            let thickbox = this.Config.getCssSourceFiles("thickbox")
+            let mainGroup = this.Config.getCssSourceFiles("space/main_group")
+            let uiCommon = this.Config.getCssSourceFiles("dsWidget/common")
+            return Array.of(skins, loadSpaceCommon, zTree,thickbox,mainGroup,uiCommon)
         }
     }
 }

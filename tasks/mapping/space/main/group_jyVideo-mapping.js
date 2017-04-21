@@ -13,43 +13,37 @@ class Video extends SpaceMapping{
 
     extraThirdJs(min = false){
         if(min){
-            let lazyload = this.Config.getJsTargetFilePath("jquery/jquery.lazyload")
-            let fancyBox = this.Config.getJsTargetFilePath("jquery/jquery.fancybox")
-            let plupload = this.Config.getJsTargetFilePath("ds-widget/plupload-parent-common")
+            let zTree = this.Config.getJsTargetFilePath("jquery/jquery-ztree-all-3.5")
+            let fancybox = this.Config.getJsTargetFilePath("jquery/jquery.fancybox")
             let uiWidget = this.Config.getJsTargetFilePath("ds-widget/jquery-ui-widget")
-            let duiTextarea = this.Config.getJsTargetFilePath("ds-widget/dui-textarea")
-            let duiInput = this.Config.getJsTargetFilePath("ds-widget/dui-input")
-            return Array.of(lazyload, fancyBox, plupload, uiWidget, duiTextarea, duiInput)
+            let uiSearch = this.Config.getJsTargetFilePath("ds-widget/dui-search")
+            let input = this.Config.getJsTargetFilePath("ds-widget/dui-input")
+            let pageConfig = this.Config.getJsTargetFilePath("space/tools/spacePage")
+            return Array.of(zTree, fancybox, uiWidget, uiSearch,input, pageConfig)
         }else{
-            let lazyload = this.Config.getJsSourceFiles("jquery/jquery.lazyload")
-            let fancyBox = this.Config.getJsSourceFiles("jquery/jquery.fancybox")
-            let plupload = this.Config.getJsSourceFiles("ds-widget/plupload-parent-common")
+            let zTree = this.Config.getJsSourceFiles("jquery/jquery-ztree-all-3.5")
+            let fancybox = this.Config.getJsSourceFiles("jquery/jquery.fancybox")
             let uiWidget = this.Config.getJsSourceFiles("ds-widget/jquery-ui-widget")
-            let duiTextarea = this.Config.getJsSourceFiles("ds-widget/dui-textarea")
-            let duiInput = this.Config.getJsSourceFiles("ds-widget/dui-input")
-            return Array.of(lazyload, fancyBox, plupload, uiWidget, duiTextarea, duiInput)
+            let uiSearch = this.Config.getJsSourceFiles("ds-widget/dui-search")
+            let input = this.Config.getJsSourceFiles("ds-widget/dui-input")
+            let pageConfig = this.Config.getJsSourceFiles("space/tools/spacePage")
+            return Array.of(zTree, fancybox, uiWidget, uiSearch, input,pageConfig)
         }
     }
 
     extraThirdCss(min = false){
         if(min){
-            let thickBox = this.Config.getTargetFilePath(this.CssConfig, "thickbox")
-            let fancyBox = this.Config.getTargetFilePath(this.CssConfig, "fancybox")
-            let dsWidgetCommon = this.Config.getTargetFilePath(this.CssConfig, "dsWidget/common")
-            return Array.of(thickBox, fancyBox, dsWidgetCommon)
+            let ztreeStyle = this.Config.getCssTargetFilePath("jquery/zTreeStyle")
+            let uiCommon = this.Config.getCssTargetFilePath("dsWidget/common")
+            let mainGroup = this.Config.getCssTargetFilePath("space/main_group")
+            let fancybox = this.Config.getCssTargetFilePath("fancybox")
+            return Array.of(ztreeStyle, uiCommon, mainGroup,fancybox)
         }else{
-            let thickBox = this.CssConfig["thickbox"]["source"]
-            let fancyBox = this.CssConfig["fancybox"]["source"]
-            let dsWidgetCommon = this.CssConfig["dsWidget"]["common"]["source"]
-            return Array.of(thickBox, fancyBox, dsWidgetCommon)
-        }
-    }
-
-    uniqueCss(min = false){
-        if(min){
-            return path.normalize(this.Config.CSS_TARGET_PATH + "/space/main/group_gallery.min.css" )
-        }else{
-            return path.normalize(this.Config.CSS_SOURCE_PATH + "/space/main/group_gallery.css" )
+            let ztreeStyle = this.Config.getCssSourceFiles("jquery/zTreeStyle")
+            let uiCommon = this.Config.getCssSourceFiles("dsWidget/common")
+            let mainGroup = this.Config.getCssSourceFiles("space/main_group")
+            let fancybox = this.Config.getCssSourceFiles("fancybox")
+            return Array.of(ztreeStyle, uiCommon, mainGroup,fancybox)
         }
     }
 }

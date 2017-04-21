@@ -15,22 +15,16 @@ class WorkMapping extends SpaceMapping {
             let jqueryFancybox = this.Config.getJsTargetFilePath("jquery/jquery.fancybox")
             let jqueryPortletlazyload = this.Config.getJsTargetFilePath("jquery/jquery.portletlazyload")
             let jqueryIView = this.Config.getJsTargetFilePath("jquery/jquery.iview")
-            return Array.of(jqueryFancybox, jqueryPortletlazyload, jqueryIView)
+            let widget = this.Config.getJsTargetFilePath("ds-widget/jquery-ui-widget")
+            let textarea = this.Config.getJsTargetFilePath("ds-widget/dui-textarea")
+            return Array.of(jqueryFancybox, jqueryPortletlazyload,jqueryIView,widget,textarea)
         }else{
             let jqueryFancybox = this.Config.getJsSourceFiles("jquery/jquery.fancybox")
             let jqueryPortletlazyload = this.Config.getJsSourceFiles("jquery/jquery.portletlazyload")
             let jqueryIView = this.Config.getJsSourceFiles("jquery/jquery.iview")
-            return Array.of(jqueryFancybox, jqueryPortletlazyload, jqueryIView)
-        }
-    }
-
-    uniqueJs(min = false){
-        if(min){
-            let orgCommonTarget = this.Config.getJsTargetFilePath("space/main")
-            return [].concat(orgCommonTarget)
-        }else{
-            let orgCommonTarget = this.Config.getJsSourceFiles("space/main")
-            return [].concat(orgCommonTarget)
+            let widget = this.Config.getJsSourceFiles("ds-widget/jquery-ui-widget")
+            let textarea = this.Config.getJsSourceFiles("ds-widget/dui-textarea")
+            return Array.of(jqueryFancybox, jqueryPortletlazyload,jqueryIView,widget,textarea)
         }
     }
 
