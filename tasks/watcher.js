@@ -7,14 +7,18 @@ const gulp = require("gulp")
 const Task = require("./libs/task")
 const exec = require("child_process").exec
 const dateFormat = require("dateformat")
-const path = require("path")
 gulp.task("watcher", function (finish) {
     let task = new Task()
-    let htmlPath = path.normalize(task.Config.HTML_SOURCE_PATH+ "/**/*.html")
-    let notWatherHtml = path.normalize(task.Config.ROOT + "/common/**/*.html")
-    let jsPath = path.normalize(task.Config.JS_SOURCE_PATH +"/**/*.js")
-    let cssPath = path.normalize(task.Config.CSS_SOURCE_PATH + "/**/*.css")
-    let watcher = gulp.watch([htmlPath,jsPath,notWatherHtml, cssPath])
+    let htmlPath = (task.Config.HTML_SOURCE_PATH+ "/**/*.html").replace("./","");
+    let notWatherHtml = (task.Config.ROOT + "/common/**/*.html").replace("./","")
+    let jsPath = (task.Config.JS_SOURCE_PATH +"/**/*.js").replace("./","")
+
+    let ueditor = ("!"+task.Config.JS_SOURCE_PATH +"/ueditor/ueditor.all.js")
+    let jwplayer = ("!"+task.Config.JS_SOURCE_PATH +"/red5player/jwplayer.js")
+    let duiInput = ("!"+task.Config.JS_SOURCE_PATH +"/ds-widget/dui-input.js")
+    let artDialog = ("!"+task.Config.JS_SOURCE_PATH +"/base/artDialog.js")
+    let cssPath = (task.Config.CSS_SOURCE_PATH + "/**/*.css").replace("./","")
+    let watcher = gulp.watch([htmlPath,jsPath,notWatherHtml,ueditor,jwplayer,duiInput,artDialog, cssPath])
     watcher.on('change', function (event) {
             console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
             if(event.type == 'deleted'){

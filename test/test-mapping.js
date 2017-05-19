@@ -8,7 +8,7 @@ const Mapping = require("../tasks/libs/mapping")
 
 
 describe("Mapping",function(){
-    /*describe("#commonThirdJs()", function(){
+    describe("#commonThirdJs()", function(){
         it("it will be return array!but, in array dont include array", function(){
             let mapping = new Mapping()
             let array = mapping.commonThirdJs()
@@ -40,6 +40,6 @@ describe("Mapping",function(){
             let array = mapping.extraThirdJs("index", false)
             console.info(array)
         })
-    })*/
+    })
 })
 

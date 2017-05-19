@@ -66,22 +66,22 @@ class Mapping {
 
     getSubMappingPath(filePath) {
         let fileName = filePath.substring(0, filePath.lastIndexOf("."))
-        return path.normalize(__dirname + "/../mapping/" + fileName + "-mapping.js")
+        return path.normalize(process.cwd() + "/mapping/" + fileName + "-mapping.js")
     }
 
     getSubInjectFiles(htmlPath, propertyKey, min = false) {
         if (htmlPath.indexOf(path.sep) != -1) {//判断传第过来的路径 有没有“/”， 没有就是首页下面的
             let paths = htmlPath.split(path.sep)
-            let fileName = paths.pop()
+            let fileName = paths.pop().replace(/.html|.js|.css/,"")
             let filePath = ""
             let files = []
             paths.forEach(function (item, index) {
                 filePath += item + "/"
                 let subMappingName = ""
                 if (index == (paths.length - 1)) {
-                    subMappingName = path.normalize(__dirname + "/../mapping/" + filePath + fileName + "-mapping.js")
+                    subMappingName = path.normalize(process.cwd() + "/mapping/" + filePath + fileName + "-mapping.js")
                 } else {
-                    subMappingName = path.normalize(__dirname + "/../mapping/" + filePath + item + "-mapping.js")
+                    subMappingName = path.normalize(process.cwd() + "/mapping/" + filePath + item + "-mapping.js")
                 }
                 if (fs.existsSync(subMappingName)) {
                     let SubMapping = require(subMappingName)
@@ -94,7 +94,7 @@ class Mapping {
             })
             return files
         } else {
-            let subMappingName = path.normalize(__dirname + "/../mapping/" + htmlPath +  "-mapping.js")
+            let subMappingName = this.getSubMappingPath(htmlPath)
             let files = []
             if (fs.existsSync(subMappingName)) {
                 let SubMapping = require(subMappingName)

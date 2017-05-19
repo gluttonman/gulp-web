@@ -1,2 +1,9 @@
 node_modules
 .idea
+source
+mapping
+js
+images
+html
+css
+gulpfile.js

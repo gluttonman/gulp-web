@@ -10,7 +10,7 @@ class Config{
     }
 }
 //相对路径
-let relativePath = Config.RELATIVE_PATH = "." + path.sep
+let relativePath = Config.RELATIVE_PATH = process.cwd() + path.sep
 //源文件目录位置
 Config.SOURCEDIR = relativePath + "source"
 Config.HTML_SOURCE_PATH =  Config.SOURCEDIR + path.sep + "html"
@@ -48,12 +48,16 @@ Config.getTargetFilePath = function (config, filename) {
 
     let dirs = path.normalize(filePath).split(path.sep)
     let fileConfig = config
+    let singleFile = undefined
     dirs.forEach((item, index)=>{
-        fileConfig = fileConfig[item]
-        if(!fileConfig){
-            return Object.is(config,this.JsConfig)?this.fetchJsSingleFile(filePath, true):this.fetchCssSingleFile(filePath, true)
+        if(!fileConfig || !Object.keys(fileConfig).includes(item)){
+            singleFile =  Object.is(config,this.JsConfig)?this.fetchJsSingleFile(filePath, true):this.fetchCssSingleFile(filePath, true)
         }
+        fileConfig = fileConfig[item]
     })
+    if(singleFile){
+        return singleFile
+    }
     let sourceFileToTarget = (sourceFileConfig)=>{
         if(!sourceFileConfig || !Object.keys(sourceFileConfig).includes("source") || typeof sourceFileConfig["source"] != "string"){
             console.warn("Config中["+filePath+"]['source'] is not string")
@@ -97,7 +101,8 @@ Config.getSourceFiles = function(config, filename){
                 singleFile = Object.is(config,this.JsConfig)?this.fetchJsSingleFile(filename, false):this.fetchCssSingleFile(filename, false)
             }
         }
-        fileConfig = fileConfig[item]
+        //当fileConfig中不包含这个文件的配置，则直接加载文件路径
+        fileConfig = fileConfig && Object.keys(fileConfig).includes(item)?fileConfig[item]:null
     })
 
     if(singleFile){//返回页面独有的js文件
@@ -109,6 +114,7 @@ Config.getSourceFiles = function(config, filename){
                 return fileConfig["source"][key]
             })
         }else{
+            //fileConfig为null时，加载文件目录
             return Object.is(config, this.JsConfig)?this.fetchJsSingleFile(filename,false):this.fetchCssSingleFile(filename, false)
         }
 
@@ -166,206 +172,25 @@ Config.fetchCssSingleFile = function(filePath, min = false){
     }
 }
 
+//注入js css路径文件
+let JsConfig = Config.JsConfig = {}
 
-//key的名字就是文件夹的名字
-Config.JsConfig = {
-    jquery :{
-        target : path.normalize(Config.JS_TARGET_PATH + "/jquery/jquery.min.js"),//如果没有此熟悉，就默认到项目根目录的jquery/jquery-1.12.4.min.js,
-        source:{
-            jquery : path.normalize(Config.JS_SOURCE_PATH + "/jquery/jquery-1.7.2.js"),
-            cookie : path.normalize(Config.JS_SOURCE_PATH + "/jquery/jquery.cookie.js")
-        },
-        "jquery.lazyload":{
-            source : path.normalize(Config.JS_SOURCE_PATH + "/jquery/jquery.lazyload.js")
-        },
-        "jquery.fancybox" : {
-            source:path.normalize(Config.JS_SOURCE_PATH +"/jquery/jquery.fancybox.js")
-        },
-        "jquery.portletlazyload" : {
-            source : path.normalize(Config.JS_SOURCE_PATH + "/jquery/jquery.portletlazyload.js")
-        },
-        "jquery.iview" :{
-            source : path.normalize(Config.JS_SOURCE_PATH + "/jquery/jquery.iview.js")
-        },
-        "jquery.ztree.all-3.5":{
-            source : path.normalize(Config.JS_SOURCE_PATH + "/jquery/jquery.ztree.all-3.5.js")
-        },
-        "jquery.ztree.excheck-3.5":{
-        	source : path.normalize(Config.JS_SOURCE_PATH + "/jquery/jquery.ztree.excheck-3.5.js")
-        }
-    },
-    yptArticle : {
-    	source : path.normalize(Config.JS_SOURCE_PATH + "/article/yptArticle.js")
-    },
-    yptResource : {
-    	source : path.normalize(Config.JS_SOURCE_PATH + "/resource/yptResource.js")
-    },
-    shareRange : {
-    	source : path.normalize(Config.JS_SOURCE_PATH + "/resource/dui-share-range.js")
-    },
-    bootstrap:{
-        source : path.normalize(Config.JS_SOURCE_PATH + "/bootstrap/bootstrap-3.0.3.js")
-    },
-    base :{
-        target : path.normalize(Config.JS_TARGET_PATH + "/base/base.min.js"),
-        source : {
-            template: path.normalize(Config.JS_SOURCE_PATH +"/base/template.js"),
-            base64 : path.normalize(Config.JS_SOURCE_PATH + "/base/base64.js"),
-            artDialog : path.normalize(Config.JS_SOURCE_PATH + "/base/artDialog.js"),
-            thickbox : path.normalize(Config.JS_SOURCE_PATH + "/base/thickbox.js"),
-            iframeTools : path.normalize(Config.JS_SOURCE_PATH + "/base/iframeTools.js"),
-            baseConfig : path.normalize(Config.JS_SOURCE_PATH + "/base/base-config.js"),
-            newConfig : path.normalize(Config.JS_SOURCE_PATH + "/base/newConfig.js")
-        }
-    },
-    manage :{
-    	source : path.normalize(Config.JS_SOURCE_PATH + "/manage/manageConfig.js")
-    },
-    "ds-widget" : {
-        "jquery-ui-widget" :{
-           source : path.normalize(Config.JS_SOURCE_PATH + "/ds-widget/jquery-ui-widget.js")
-        },
-        "dui-search" :{
-            source : path.normalize(Config.JS_SOURCE_PATH + "/ds-widget/dui-search.js")
-        },
-        "dui-input" : {
-            source : path.normalize(Config.JS_SOURCE_PATH + "/ds-widget/dui-input.js")
-        },
-        "dui-textarea" : {
-            source : path.normalize(Config.JS_SOURCE_PATH + "/ds-widget/dui-textarea.js")
-        },
-        "plupload-parent-common":{
-            source : path.normalize(Config.JS_SOURCE_PATH + "/ds-widget/plupload-parent-common.js")
-        },
-        "dui-dropdown-struc":{
-            source : path.normalize(Config.JS_SOURCE_PATH + "/ds-widget/dui-dropdown-struc.js")
-        },
-        "dui-autocomplete":{
-        	source : path.normalize(Config.JS_SOURCE_PATH + "/ds-widget/dui-autocomplete.js")
-        }
-    },
-    "ueditor" : {
-        "ueditor.config": {
-            source: path.normalize(Config.JS_SOURCE_PATH + "/ueditor/ueditor.config.js")
-        },
-        "ueditor.all" : {
-            source : path.normalize(Config.JS_SOURCE_PATH + "/ueditor/ueditor.all.js")
-        },
-        "kityformula-plugin" : {
-            "addKityFormulaDialog":{
-                source: path.normalize(Config.JS_SOURCE_PATH + "/ueditor/kityformula-plugin/addKityFormulaDialog.js")
-            },
-            "getKfContent":{
-                source : path.normalize(Config.JS_SOURCE_PATH + "/ueditor/kityformula-plugin/getKfContent.js")
-            },
-            "defaultFilterFix": {
-                source : path.normalize(Config.JS_SOURCE_PATH + "/ueditor/kityformula-plugin/defaultFilterFix.js")
-            }
-        }
-    },
-    "datePicker" : {
-        "wdatePicker": {
-            source: path.normalize(Config.JS_SOURCE_PATH + "/datepicker/WdatePicker.js")
-        }
-    },
-    "IEWdatePicker" : {
-        "wdatePicker": {
-            source: path.normalize(Config.JS_SOURCE_PATH + "/datepicker/IEWdatePicker.js")
-        }
-    },
-    "page":{
-        "pager" : {
-            source: path.normalize(Config.JS_SOURCE_PATH + "/page/pager.js")
-        }
-    },
-    space : {
-        base : {
-            target : path.normalize(Config.JS_TARGET_PATH + "/space/spaceBase.min.js"),
-            source : {
-                xss : path.normalize(Config.JS_SOURCE_PATH + "/space/xss.js"),
-                org_common : path.normalize(Config.JS_SOURCE_PATH + "/space/main/org_common.js"),
-                loadTemplates : path.normalize(Config.JS_SOURCE_PATH + "/space/tools/loadTemplates.js"),
-                spaceConfig : path.normalize(Config.JS_SOURCE_PATH + "/space/space-config.js"),
-                mainLogin : path.normalize(Config.JS_SOURCE_PATH + "/space/main_login.js"),
-                loadSpaceCommon : path.normalize(Config.JS_SOURCE_PATH + "/space/loadSpaceCommon.js")
-            }
-        },
-        main : {
-            source : path.normalize(Config.JS_SOURCE_PATH + "/space/main/org_main.js")
-        },
-        tools : {
-            spacePage : {
-                source : path.normalize(Config.JS_SOURCE_PATH + "/space/tools/spacePage.js")
-            },
-            moment : {
-                source : path.normalize(Config.JS_SOURCE_PATH + "/space/tools/moment.js")
-            }
-        },
-        spaceConfig : {
-            source : path.normalize(Config.JS_SOURCE_PATH + "/space/space-config.js")
-        }
-    }
+Config.addJsConfig = function(obj){
+    Object.assign(JsConfig, obj)
 }
 
 
-Config.CssConfig = {
-    "jquery" :{
-        zTreeStyle : {
-            source: path.normalize(Config.CSS_SOURCE_PATH + "/jquery/zTreeStyle.css")
-        }
-    },
-    "bootstrap" : {
-        source: path.normalize(Config.CSS_SOURCE_PATH + "/bootstrap/bootstrap.css")
-    },
-    "skins":{
-        source: path.normalize(Config.CSS_SOURCE_PATH + "/skins/default.css")
-    },
-    "thickbox" :{
-        source : path.normalize(Config.CSS_SOURCE_PATH + "/thickbox/thickbox.css")
-    },
-    "fancybox":{
-        source : path.normalize(Config.CSS_SOURCE_PATH + "/jquery/jquery.fancybox.css")
-    },
-    "dsWidget":{
-        common :{
-            source : path.normalize(Config.CSS_SOURCE_PATH + "/ds-widget/dui-common.css")
-        },
-        ztree : {
-            source : path.normalize(Config.CSS_SOURCE_PATH + "/ds-widget/dui-ztree.css")
-        }
-    },
-    page : {
-        pager : path.normalize(Config.CSS_SOURCE_PATH + "/page/pager.css")
-    },
-    //space使用样式
-    space :{
-        "main" :{
-            source: path.normalize(Config.CSS_SOURCE_PATH + "/space/main.css")
-        },
-        "loadSpaceCommon" :{
-            source: path.normalize(Config.CSS_SOURCE_PATH + "/space/loadSpaceCommon.css")
-        },
-        "space_article_pages":{
-            source: path.normalize(Config.CSS_SOURCE_PATH + "/space/space_article_pages.css")
-        },
-        "main_group" : {
-            source : path.normalize(Config.CSS_SOURCE_PATH + "/space/main_group.css")
-        }
-    },
-    web : {
-      common : {
-          source : path.normalize(Config.CSS_SOURCE_PATH + "/web/common.css")
-      }
-    },
-    manage :{
-        "manageCommon" :{
-            source: path.normalize(Config.CSS_SOURCE_PATH + "/manage/manageCommon.css")
-        },
-        "resourceList" :{
-            source: path.normalize(Config.CSS_SOURCE_PATH + "/manage/resource/resourceList.css")
-        }
-    }
+Config.addJsConfigByKey = function(key, value){
+    JsConfig[key] = value
 }
 
+let CssConfig = Config.CssConfig = {}
 
+Config.addCssConfig = function(obj){
+    Object.assign(CssConfig, obj)
+}
+
+Config.addCssConfigByKey = function(key, value){
+    CssConfig[key] = value
+}
 module.exports = Config
