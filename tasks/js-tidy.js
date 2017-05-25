@@ -58,11 +58,7 @@ gulp.task("uglify-js-all", function () {
     let sourceFiles = task.Config.JS_SOURCE_PATH + path.sep + "**" + path.sep + "*.js"
     let targetFilePath = task.Config.JS_TARGET_PATH
     return gulp.src(Array.of(sourceFiles, notIncludeFile))
-        .pipe(through2.obj(function (file, encode, callback) {
-            let result = UglifyJs.minify(file, {ie8: true})
-            file.content = result.code
-            callback(null, file)
-        })).pipe(rename(function (fileNameObj) {
+        .pipe(minifier({ie8:true},UglifyJs)).pipe(rename(function (fileNameObj) {
             fileNameObj.extname = ".min.js"
         })).pipe(gulp.dest(targetFilePath))
 })

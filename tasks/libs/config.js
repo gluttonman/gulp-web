@@ -53,7 +53,7 @@ Config.getTargetFilePath = function (config, filename) {
         if(!fileConfig || !Object.keys(fileConfig).includes(item)){
             singleFile =  Object.is(config,this.JsConfig)?this.fetchJsSingleFile(filePath, true):this.fetchCssSingleFile(filePath, true)
         }
-        fileConfig = fileConfig[item]
+        fileConfig = fileConfig && Object.keys(fileConfig).includes(item)?fileConfig[item]:null
     })
     if(singleFile){
         return singleFile
